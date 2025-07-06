@@ -1,0 +1,106 @@
+﻿@model Actividad4LengProg.Models.Estudiante
+@{
+    ViewData["Title"] = "Registrar Estudiante";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Registrar Estudiante</h2>
+        <a asp-action="Lista" class="btn btn-primary">Ver Lista de Estudiantes</a>
+    </div>
+
+    <form asp-action="Registrar" method="post" class="row g-3">
+        @Html.AntiForgeryToken()
+
+        <div class="col-md-6">
+            <label asp-for="NombreCompleto" class="form-label"></label>
+            <input asp-for="NombreCompleto" class="form-control" />
+            <span asp-validation-for="NombreCompleto" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Matricula" class="form-label"></label>
+            <input asp-for="Matricula" class="form-control" />
+            <span asp-validation-for="Matricula" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Carrera" class="form-label"></label>
+            <select asp-for="Carrera" class="form-select" asp-items="ViewBag.Carreras">
+                <option value="">Seleccione una carrera</option>
+                <option>Medicina</option>
+                <option>Informatica</option>
+                <option>Derecho</option>
+            </select>
+            <span asp-validation-for="Carrera" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="CorreoInstitucional" class="form-label"></label>
+            <input asp-for="CorreoInstitucional" class="form-control" />
+            <span asp-validation-for="CorreoInstitucional" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Telefono" class="form-label"></label>
+            <input asp-for="Telefono" class="form-control" />
+            <span asp-validation-for="Telefono" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="FechaNacimiento" class="form-label"></label>
+            <input asp-for="FechaNacimiento" class="form-control" type="date" />
+            <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Genero" class="form-label"></label>
+            <select asp-for="Genero" class="form-select">
+                <option value="">Seleccione</option>
+                <option>Masculino</option>
+                <option>Femenino</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Turno" class="form-label"></label>
+            <select asp-for="Turno" class="form-select">
+                <option>Mañana</option>
+                <option>Tarde</option>
+                <option>Noche</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="TipoIngreso" class="form-label"></label>
+            <select asp-for="TipoIngreso" class="form-select">
+                <option>Nuevo</option>
+                <option>Transferencia</option>
+            </select>
+        </div>
+
+        <div class="col-md-3 form-check">
+            <input asp-for="EstaBecado" class="form-check-input" type="checkbox" />
+            <label asp-for="EstaBecado" class="form-check-label"></label>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="PorcentajeBeca" class="form-label"></label>
+            <input asp-for="PorcentajeBeca" class="form-control" />
+        </div>
+
+        <div class="col-md-12 form-check">
+            <input asp-for="Terminos" class="form-check-input" type="checkbox" />
+            <label asp-for="Terminos" class="form-check-label"></label>
+            <span asp-validation-for="Terminos" class="text-danger"></span>
+        </div>
+
+        <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-success">Registrar</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

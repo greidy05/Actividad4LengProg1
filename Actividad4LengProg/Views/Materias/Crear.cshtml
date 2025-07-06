@@ -1,0 +1,40 @@
+﻿@model Actividad4LengProg.Models.Materia
+
+@{
+    ViewData["Title"] = "Crear Materia";
+}
+
+<h2>Crear Materia</h2>
+
+<form asp-action="Crear" method="post" class="needs-validation" novalidate>
+    <div class="mb-3">
+        <label asp-for="Codigo" class="form-label"></label>
+        <input asp-for="Codigo" class="form-control" required />
+        <span asp-validation-for="Codigo" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Nombre" class="form-label"></label>
+        <input asp-for="Nombre" class="form-control" required />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Creditos" class="form-label"></label>
+        <input asp-for="Creditos" type="number" min="1" class="form-control" required />
+        <span asp-validation-for="Creditos" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Carrera" class="form-label"></label>
+        <input asp-for="Carrera" class="form-control" required />
+        <span asp-validation-for="Carrera" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

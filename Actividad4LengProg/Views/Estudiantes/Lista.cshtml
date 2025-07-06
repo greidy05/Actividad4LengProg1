@@ -1,0 +1,114 @@
+﻿@model List<Actividad4LengProg.Models.Estudiante>
+@{
+    ViewData["Title"] = "Lista de Estudiantes";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (TempData["mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["mensaje"]</div>
+}
+
+<div class="mb-3 row g-2 align-items-center">
+    <div class="col-sm-8 col-md-6">
+        <input id="buscarInput" class="form-control" type="text" placeholder="Buscar por nombre o matrícula..." />
+    </div>
+    <div class="col-auto">
+        <button id="btnBuscar" class="btn btn-primary">Buscar</button>
+    </div>
+    <div class="col-auto">
+        <button id="btnMostrarTodo" class="btn btn-secondary">Mostrar Todo</button>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Matrícula</th>
+                <th>Nombre Completo</th>
+                <th>Carrera</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th>Fecha Nac.</th>
+                <th>Género</th>
+                <th>Turno</th>
+                <th>Tipo Ingreso</th>
+                <th>Becado</th>
+                <th>% Beca</th>
+                <th>Términos</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tablaCuerpo">
+            @foreach (var e in Model)
+            {
+                <tr>
+                    <td>@e.Matricula</td>
+                    <td>@e.NombreCompleto</td>
+                    <td>@e.Carrera</td>
+                    <td>@e.CorreoInstitucional</td>
+                    <td>@e.Telefono</td>
+                    <td>@e.FechaNacimiento.ToString("yyyy-MM-dd")</td>
+                    <td>@e.Genero</td>
+                    <td>@e.Turno</td>
+                    <td>@e.TipoIngreso</td>
+                    <td>@(e.EstaBecado ? "Sí" : "No")</td>
+                    <td>@(e.PorcentajeBeca?.ToString() ?? "-")</td>
+                    <td>@(e.Terminos ? "Aceptados" : "No")</td>
+                    <td>
+                        <a asp-action="Editar" asp-route-matricula="@e.Matricula" class="btn btn-sm btn-warning mb-1">Editar</a>
+                        <a asp-action="Eliminar" asp-route-matricula="@e.Matricula" class="btn btn-sm btn-danger mb-1" onclick="return confirm('¿Está seguro de eliminar este estudiante?')">Eliminar</a>
+                        <a asp-controller="Calificaciones" asp-action="Index" asp-route-matricula="@e.Matricula" class="btn btn-sm btn-primary mb-1">Calificaciones</a>
+                        <a asp-controller="Materias" asp-action="Index" class="btn btn-sm btn-secondary">Materias</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<a asp-action="Index" class="btn btn-success mt-3">Registrar Nuevo Estudiante</a>
+
+@section Scripts {
+    <script>
+        const btnBuscar = document.getElementById('btnBuscar');
+        const btnMostrarTodo = document.getElementById('btnMostrarTodo');
+        const buscarInput = document.getElementById('buscarInput');
+        const tablaCuerpo = document.getElementById('tablaCuerpo');
+        const filasOriginales = Array.from(tablaCuerpo.querySelectorAll('tr'));
+
+        btnBuscar.addEventListener('click', () => {
+            const textoBusqueda = buscarInput.value.trim().toLowerCase();
+            if (!textoBusqueda) {
+                alert('Por favor ingrese texto para buscar.');
+                return;
+            }
+            tablaCuerpo.innerHTML = '';
+            const filasFiltradas = filasOriginales.filter(fila => {
+                const matricula = fila.cells[0].textContent.toLowerCase();
+                const nombre = fila.cells[1].textContent.toLowerCase();
+                return matricula.includes(textoBusqueda) || nombre.includes(textoBusqueda);
+            });
+            if (filasFiltradas.length === 0) {
+                tablaCuerpo.innerHTML = `<tr><td colspan="13" class="text-center">No se encontraron resultados.</td></tr>`;
+            } else {
+                filasFiltradas.forEach(fila => tablaCuerpo.appendChild(fila));
+            }
+        });
+
+        btnMostrarTodo.addEventListener('click', () => {
+            tablaCuerpo.innerHTML = '';
+            filasOriginales.forEach(fila => tablaCuerpo.appendChild(fila));
+            buscarInput.value = '';
+        });
+
+        buscarInput.addEventListener('keypress', e => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                btnBuscar.click();
+            }
+        });
+    </script>
+}

@@ -1,0 +1,45 @@
+﻿@model List<Actividad4LengProg.Models.Materia>
+
+@{
+    ViewData["Title"] = "Lista de Materias";
+}
+
+<h2>Lista de Materias</h2>
+
+@if (TempData["mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["mensaje"]</div>
+}
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger">@TempData["error"]</div>
+}
+
+<a asp-action="Crear" class="btn btn-primary mb-3">Crear Nueva Materia</a>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Créditos</th>
+            <th>Carrera</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var materia in Model)
+        {
+            <tr>
+                <td>@materia.Codigo</td>
+                <td>@materia.Nombre</td>
+                <td>@materia.Creditos</td>
+                <td>@materia.Carrera</td>
+                <td>
+                    <a asp-action="Editar" asp-route-codigo="@materia.Codigo" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Eliminar" asp-route-codigo="@materia.Codigo" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro de eliminar esta materia?');">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

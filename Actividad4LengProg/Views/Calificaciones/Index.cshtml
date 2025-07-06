@@ -1,0 +1,35 @@
+﻿@model List<Actividad4LengProg.Models.Calificacione>
+
+<h2>Lista de Calificaciones</h2>
+
+<a asp-action="Crear" class="btn btn-primary mb-3">Agregar Nueva Calificación</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Estudiante</th>
+            <th>Materia</th>
+            <th>Nota</th>
+            <th>Periodo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var calificacion in Model)
+        {
+            <tr>
+                <td>@calificacion.Id</td>
+                <td>@calificacion.MatriculaEstudianteNavigation.NombreCompleto</td>
+                <td>@calificacion.CodigoMateriaNavigation.Nombre</td>
+                <td>@calificacion.Nota</td>
+                <td>@calificacion.Periodo</td>
+                <td>
+                    <a asp-action="Editar" asp-route-id="@calificacion.Id" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Eliminar" asp-route-id="@calificacion.Id" class="btn btn-sm btn-danger"
+                       onclick="return confirm('¿Está seguro de eliminar esta calificación?')">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

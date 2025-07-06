@@ -1,0 +1,106 @@
+﻿@model Actividad4LengProg.Models.Estudiante
+@{
+    ViewData["Title"] = "Editar Estudiante";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Editar" method="post" class="needs-validation" novalidate>
+    @Html.AntiForgeryToken()
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label asp-for="Matricula" class="form-label"></label>
+            <input asp-for="Matricula" class="form-control" readonly />
+        </div>
+        <div class="col-md-6">
+            <label asp-for="NombreCompleto" class="form-label"></label>
+            <input asp-for="NombreCompleto" class="form-control" required />
+            <div class="invalid-feedback">El nombre completo es obligatorio.</div>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Carrera" class="form-label"></label>
+            <input asp-for="Carrera" class="form-control" required />
+            <div class="invalid-feedback">La carrera es obligatoria.</div>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="CorreoInstitucional" class="form-label"></label>
+            <input asp-for="CorreoInstitucional" class="form-control" type="email" required />
+            <div class="invalid-feedback">Ingrese un correo válido.</div>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Telefono" class="form-label"></label>
+            <input asp-for="Telefono" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label asp-for="FechaNacimiento" class="form-label"></label>
+            <input asp-for="FechaNacimiento" class="form-control" type="date" required />
+            <div class="invalid-feedback">La fecha de nacimiento es obligatoria.</div>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Genero" class="form-label"></label>
+            <select asp-for="Genero" class="form-select" required>
+                <option value="">Seleccione...</option>
+                <option>Masculino</option>
+                <option>Femenino</option>
+            </select>
+            <div class="invalid-feedback">Seleccione un género.</div>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Turno" class="form-label"></label>
+            <select asp-for="Turno" class="form-select" required>
+                <option value="">Seleccione...</option>
+                <option>Mañana</option>
+                <option>Tarde</option>
+                <option>Noche</option>
+            </select>
+            <div class="invalid-feedback">Seleccione un turno.</div>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="TipoIngreso" class="form-label"></label>
+            <select asp-for="TipoIngreso" class="form-select" required>
+                <option value="">Seleccione...</option>
+                <option>Nuevo</option>
+                <option>Transferencia</option>
+            </select>
+            <div class="invalid-feedback">Seleccione un tipo de ingreso.</div>
+        </div>
+        <div class="col-md-3 d-flex align-items-center">
+            <input asp-for="EstaBecado" class="form-check-input me-2" type="checkbox" id="estaBecado" />
+            <label asp-for="EstaBecado" class="form-check-label mb-0">Está Becado</label>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="PorcentajeBeca" class="form-label"></label>
+            <input asp-for="PorcentajeBeca" class="form-control" type="number" min="0" max="100" />
+        </div>
+        <div class="col-md-6 d-flex align-items-center">
+            <input asp-for="Terminos" class="form-check-input me-2" type="checkbox" required />
+            <label asp-for="Terminos" class="form-check-label mb-0">Acepto los términos</label>
+            <div class="invalid-feedback">Debe aceptar los términos.</div>
+        </div>
+    </div>
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        <a asp-action="Lista" class="btn btn-secondary ms-2">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Bootstrap validation
+        (() => {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+}

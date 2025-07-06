@@ -1,0 +1,17 @@
+﻿@model Actividad4LengProg.Models.Materia
+
+@{
+    ViewData["Title"] = "Eliminar Materia";
+}
+
+<h2>Eliminar Materia</h2>
+
+<div class="alert alert-danger">
+    <p>¿Está seguro que desea eliminar la materia <strong>@Model.Nombre</strong> (Código: @Model.Codigo)?</p>
+</div>
+
+<form asp-action="Eliminar" method="post">
+    <input type="hidden" asp-for="Codigo" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
